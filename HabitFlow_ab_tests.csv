@@ -1,0 +1,4 @@
+test_name,hypothesis,variants,primary_metric
+causal_vs_plain,解释卡片提升留存与执行率,"A=解释卡片,B=纯建议卡","D28 留存, 7日执行率"
+tiny_2min_vs_5min,更短微目标提升首周转化,"A=2分钟,B=5分钟",首 72h 首胜完成率
+silent_vs_context_push,情境触发比定时更有效,"A=静默低频,B=情境触发",推送点击率、执行率

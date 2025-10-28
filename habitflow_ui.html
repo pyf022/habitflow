@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>HabitFlow 高保真移动界面</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --color-primary: #2563EB;
+      --color-primary-dark: #1D4ED8;
+      --color-success: #1C7D4E;
+      --color-warning: #B45309;
+      --color-danger: #B42318;
+      --color-surface-bg: #F6F7FA;
+      --color-surface-card: #FFFFFF;
+      --color-line: #E3E6EE;
+      --color-text: #1B1F2A;
+      --color-text-sub: #667085;
+      --color-glass: rgba(244, 246, 251, 0.72);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --shadow-1: 0 24px 60px rgba(15, 23, 42, 0.12);
+      --shadow-card: 0 20px 45px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --font-ui: "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-ui);
+      color: var(--color-text);
+      background:
+        radial-gradient(1200px circle at -10% -10%, rgba(37, 99, 235, 0.08), transparent 55%),
+        radial-gradient(900px circle at 110% 0%, rgba(59, 130, 246, 0.08), transparent 60%),
+        linear-gradient(180deg, #FFFFFF 0%, #F3F4F8 100%);
+      padding: 48px clamp(24px, 6vw, 72px);
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    header.hero {
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    header.hero .eyebrow {
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(102, 116, 142, 0.72);
+    }
+
+    header.hero h1 {
+      font-size: clamp(36px, 5vw, 54px);
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    header.hero p {
+      font-size: 18px;
+      color: var(--color-text-sub);
+      max-width: 640px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .viewport {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: flex-start;
+      max-width: 1200px;
+    }
+
+    .device {
+      position: relative;
+      width: min(360px, 100%);
+      background: linear-gradient(185deg, rgba(255,255,255,0.98) 0%, #F2F5FB 100%);
+      border-radius: 36px;
+      padding: 24px 18px 28px;
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      backdrop-filter: blur(22px);
+    }
+
+    .device::after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(148, 163, 184, 0.32);
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(100,116,139,0.8);
+      margin-bottom: 12px;
+      padding: 0 6px;
+    }
+
+    .screen {
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 26px;
+      border: 1px solid rgba(15, 23, 42, 0.04);
+      padding: 20px 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      min-height: 640px;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255,255,255,0.9);
+      backdrop-filter: blur(24px);
+    }
+
+    .screen-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .screen-header .title {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .screen-header time {
+      font-size: 13px;
+      text-transform: uppercase;
+      color: rgba(102,116,142,0.8);
+      letter-spacing: 0.08em;
+    }
+
+    .screen-header h2 {
+      font-size: 24px;
+      margin: 0;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .screen-header h2 span.badge-pill {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(37,99,235,0.12);
+      color: var(--color-primary);
+      letter-spacing: 0.08em;
+    }
+
+    .goal-chip {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(30,41,59,0.72);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.24);
+      background: rgba(241, 245, 249, 0.86);
+    }
+
+    .card {
+      background: linear-gradient(165deg, #FFFFFF 0%, #F7F9FD 100%);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      box-shadow: var(--shadow-card);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 600;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .domain-token {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 12px;
+      background: rgba(37, 99, 235, 0.18);
+      color: var(--color-primary);
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card-body {
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(27,31,42,0.9);
+    }
+
+    .metadata {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: rgba(102,116,142,0.8);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+      letter-spacing: 0.01em;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: #F8FAFF;
+      box-shadow: 0 16px 30px rgba(37, 99, 235, 0.32);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 34px rgba(37, 99, 235, 0.38);
+    }
+
+    .btn.ghost {
+      background: rgba(15,23,42,0.04);
+      color: var(--color-text);
+      border: 1px solid rgba(15,23,42,0.08);
+    }
+
+    .btn.ghost:hover {
+      background: rgba(15,23,42,0.08);
+    }
+
+    .btn.tertiary {
+      background: rgba(37, 99, 235, 0.12);
+      color: var(--color-primary);
+    }
+
+    .btn.link {
+      background: none;
+      color: var(--color-primary);
+      padding: 0;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(28, 125, 78, 0.18);
+      color: var(--color-success);
+    }
+
+    .pill.warning {
+      background: rgba(148, 98, 0, 0.18);
+      color: var(--color-warning);
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .quick-action {
+      flex: 1;
+      background: linear-gradient(150deg, #FFFFFF 0%, #F5F7FC 100%);
+      border-radius: 16px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border: 1px solid rgba(15,23,42,0.05);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .quick-action span.time {
+      font-size: 12px;
+      color: rgba(102,116,142,0.78);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .quick-action strong {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(27,31,42,0.92);
+    }
+
+    .chat-card {
+      background: linear-gradient(170deg, rgba(255,255,255,0.95) 0%, #F3F6FC 100%);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border: 1px solid rgba(15,23,42,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chat-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 15% 20%, rgba(37,99,235,0.12), transparent 60%);
+      pointer-events: none;
+    }
+
+    .chat-message {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .chat-message.user {
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    .chat-message.user p {
+      margin: 0;
+      background: linear-gradient(135deg, rgba(37,99,235,0.9), rgba(37,99,235,0.72));
+      padding: 12px 16px;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.24);
+    }
+
+    .chat-message.ai p {
+      margin: 0;
+      background: rgba(15,23,42,0.04);
+      padding: 12px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(15,23,42,0.08);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+      color: rgba(27,31,42,0.86);
+    }
+
+    .insight-card {
+      gap: 10px;
+    }
+
+    .insight-card .card-body {
+      color: rgba(27,31,42,0.88);
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.08) 50%, rgba(15,23,42,0) 100%);
+      margin: 4px 0;
+    }
+
+    .chat-input {
+      margin-top: auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      background: rgba(15,23,42,0.04);
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: 1px solid rgba(15,23,42,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .chat-input input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--color-text);
+      font-size: 15px;
+      outline: none;
+    }
+
+    .bottom-nav {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid rgba(148,163,184,0.18);
+      margin-top: 10px;
+      color: rgba(102,116,142,0.82);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .bottom-nav span.active {
+      color: var(--color-primary);
+    }
+
+    .device[data-screen="coach"] .screen,
+    .device[data-screen="log"] .screen,
+    .device[data-screen="weekly"] .screen,
+    .device[data-screen="profile"] .screen {
+      gap: 20px;
+    }
+
+    .coach-subhead {
+      font-size: 13px;
+      color: rgba(102,116,142,0.78);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .chat-thread {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .message {
+      max-width: 260px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      line-height: 1.6;
+      font-size: 15px;
+      box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12);
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, rgba(37,99,235,0.92), rgba(29,78,216,0.78));
+      color: #F8FAFF;
+    }
+
+    .message.ai {
+      align-self: flex-start;
+      background: rgba(15,23,42,0.04);
+      border: 1px solid rgba(15,23,42,0.08);
+      color: rgba(27,31,42,0.86);
+    }
+
+    .coach-card {
+      background: linear-gradient(165deg, #FFFFFF 0%, #F4F7FD 100%);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      border: 1px solid rgba(15,23,42,0.05);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coach-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 0%, rgba(37,99,235,0.14), transparent 60%);
+      pointer-events: none;
+    }
+
+    .coach-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: rgba(102,116,142,0.82);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .coach-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .summary-card {
+      background: linear-gradient(150deg, #FFFFFF 0%, #F6F8FD 100%);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      border: 1px solid rgba(15,23,42,0.05);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .summary-card span.label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(102,116,142,0.75);
+    }
+
+    .summary-card strong {
+      font-size: 22px;
+      font-weight: 600;
+      color: rgba(27,31,42,0.92);
+    }
+
+    .summary-card small {
+      font-size: 12px;
+      color: rgba(102,116,142,0.7);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .timeline-item .time {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(102,116,142,0.7);
+      padding-top: 2px;
+    }
+
+    .timeline-card {
+      background: linear-gradient(150deg, #FFFFFF 0%, #F5F7FC 100%);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      border: 1px solid rgba(15,23,42,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .timeline-card strong {
+      font-size: 15px;
+      color: rgba(27,31,42,0.92);
+    }
+
+    .timeline-card span.meta {
+      font-size: 12px;
+      color: rgba(102,116,142,0.74);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .weekly-hero {
+      background: linear-gradient(160deg, rgba(37,99,235,0.12) 0%, #FFFFFF 100%);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid rgba(15,23,42,0.05);
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .progress-ring {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: conic-gradient(var(--color-primary) 0% 62%, rgba(255,255,255,0.08) 62% 100%);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .progress-ring::after {
+      content: "62%";
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      color: rgba(27,31,42,0.92);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 6px 14px rgba(15,23,42,0.08);
+    }
+
+    .weekly-details {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .weekly-details span {
+      font-size: 14px;
+      color: rgba(102,116,142,0.78);
+    }
+
+    .weekly-insights {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .insight-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(150deg, #FFFFFF 0%, #F5F8FD 100%);
+      border: 1px solid rgba(15,23,42,0.05);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .insight-row strong {
+      font-size: 15px;
+      display: block;
+      margin-bottom: 4px;
+      color: rgba(27,31,42,0.92);
+    }
+
+    .insight-row span {
+      font-size: 13px;
+      color: rgba(102,116,142,0.78);
+    }
+
+    .profile-card {
+      background: linear-gradient(160deg, #FFFFFF 0%, #F5F7FC 100%);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid rgba(15,23,42,0.05);
+      display: grid;
+      gap: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(37,99,235,0.9), rgba(29,78,216,0.7));
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 20px;
+      color: #F8FAFF;
+      box-shadow: 0 10px 24px rgba(37,99,235,0.3);
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .profile-info span.name {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .profile-info span.email {
+      font-size: 13px;
+      color: rgba(102,116,142,0.72);
+    }
+
+    .setting-group {
+      display: grid;
+      gap: 12px;
+    }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(150deg, #FFFFFF 0%, #F6F8FD 100%);
+      border: 1px solid rgba(15,23,42,0.05);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .setting-row span {
+      font-size: 14px;
+      color: rgba(27,31,42,0.88);
+    }
+
+    .toggle {
+      width: 46px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.08);
+      border: 1px solid rgba(148,163,184,0.3);
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      position: relative;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .toggle::after {
+      content: "";
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 6px 12px rgba(15,23,42,0.18);
+      transform: translateX(0);
+      transition: transform 160ms ease;
+    }
+
+    .toggle.active {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      border-color: transparent;
+    }
+
+    .toggle.active::after {
+      transform: translateX(18px);
+    }
+
+    .profile-links {
+      display: grid;
+      gap: 10px;
+    }
+
+    .profile-links a {
+      font-size: 14px;
+      color: var(--color-primary);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .side-panel {
+      flex: 1 1 420px;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      color: var(--color-text);
+    }
+
+    .panel-section {
+      background: linear-gradient(155deg, #FFFFFF 0%, #F5F8FD 100%);
+      border-radius: var(--radius-lg);
+      padding: 24px 26px;
+      border: 1px solid rgba(15,23,42,0.05);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+    }
+
+    .panel-section h3 {
+      margin: 0 0 18px;
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .kpi {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .kpi .value {
+      font-size: 44px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .kpi .trend {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: rgba(76, 186, 131, 0.9);
+    }
+
+    .pill-outline {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(102,116,142,0.8);
+      background: rgba(241,245,249,0.9);
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 20px 0 0;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .list-item .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--color-primary);
+      margin-top: 7px;
+    }
+
+    .list-item strong {
+      font-size: 15px;
+      font-weight: 600;
+      color: rgba(27,31,42,0.92);
+    }
+
+    .list-item span {
+      font-size: 14px;
+      color: rgba(102,116,142,0.78);
+      line-height: 1.6;
+    }
+
+    .plan-card {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .plan-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(150deg, #FFFFFF 0%, #F5F8FD 100%);
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(15,23,42,0.05);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .plan-row span {
+      font-size: 15px;
+      color: rgba(27,31,42,0.92);
+    }
+
+    .plan-row small {
+      font-size: 12px;
+      color: rgba(102,116,142,0.74);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    footer.note {
+      font-size: 13px;
+      color: rgba(102,116,142,0.78);
+      max-width: 760px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 960px) {
+      body {
+        padding: 32px 20px 48px;
+      }
+      .viewport {
+        justify-content: center;
+      }
+      .side-panel {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <span class="eyebrow">HabitFlow V1 · 自律健康 AI 教练</span>
+    <h1>多模块高保真界面：今日、教练、记录、周报、我</h1>
+    <p>设计结合 HabitFlow 中保真交互稿与 design tokens，采用 Apple 风格的白底渐变，呈现“少而稳”日卡、AI 教练插卡、数据记录、周报复盘与隐私中心体验。</p>
+  </header>
+
+  <section class="viewport">
+    <div class="device" data-screen="today">
+      <div class="status-bar">
+        <span>09:41</span>
+        <span>• • •</span>
+      </div>
+      <div class="screen">
+        <div class="screen-header">
+          <div class="title">
+            <time datetime="2025-03-21">周五 · 3 月 21 日</time>
+            <h2>今日 · 少而稳 <span class="badge-pill">微目标强度 1</span></h2>
+          </div>
+          <span class="goal-chip">目标：睡眠作息</span>
+        </div>
+
+        <article class="card">
+          <div class="card-header">
+            <h3><span class="domain-token">🌙</span>今日微目标</h3>
+            <span class="pill">进行中</span>
+          </div>
+          <div class="card-body">
+            22:20 关客厅灯，洗漱 3 分钟后躺平准备入睡。保持 48 小时内完成 2 次，让身体记住固定节奏。
+          </div>
+          <div class="metadata">
+            <span>睡眠 · 首胜挑战</span>
+            <span>预计耗时 5′</span>
+          </div>
+          <div class="button-row">
+            <button class="btn primary">现在就做</button>
+            <button class="btn ghost">换一个</button>
+            <button class="btn tertiary">加入明天</button>
+          </div>
+        </article>
+
+        <article class="card insight-card">
+          <div class="card-header">
+            <h3><span class="domain-token">📊</span>今日洞察</h3>
+            <span class="pill warning">证据：Mid</span>
+          </div>
+          <div class="card-body">
+            昨晚 22:30 后屏幕时间较过去 3 天上升 18%，入睡潜伏期延长 13 分钟。建议在 22:15 后切换暖色模式，并做 2 轮呼吸放松。
+          </div>
+          <div class="button-row">
+            <button class="btn primary">采纳建议</button>
+            <button class="btn link">了解原因 →</button>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h3><span class="domain-token">⚡</span>一键行动</h3>
+            <span class="pill-outline">即时提神</span>
+          </div>
+          <div class="quick-actions">
+            <div class="quick-action">
+              <span class="time">呼吸</span>
+              <strong>盒式呼吸 2′</strong>
+              <span class="time">缓解入睡焦虑</span>
+            </div>
+            <div class="quick-action">
+              <span class="time">活动</span>
+              <strong>台阶攀爬 2 组</strong>
+              <span class="time">激活午后能量</span>
+            </div>
+            <div class="quick-action">
+              <span class="time">专注</span>
+              <strong>番茄钟 15′</strong>
+              <span class="time">开始晚间复盘</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="chat-card">
+          <div class="chat-message user">
+            <p>下午总是犯困，又怕喝咖啡影响睡眠，有别的办法吗？</p>
+          </div>
+          <div class="chat-message ai">
+            <p>从最近 7 天来看，你 15:00-17:00 的步数低于 5 日均值 32%，同时 17:00 后记录了 3 次咖啡。建议 15:00 安排 2 轮台阶或拉伸，17:00 后改喝无咖啡因饮品。</p>
+          </div>
+          <div class="button-row">
+            <button class="btn primary">一键加入今日</button>
+            <button class="btn ghost">替换为拉伸 2′</button>
+          </div>
+          <div class="chat-input">
+            <input type="text" placeholder="说说你今天的阻碍…" aria-label="对教练说些什么">
+            <button class="btn primary" style="padding: 10px 18px;">发送</button>
+          </div>
+        </article>
+
+        <nav class="bottom-nav">
+          <span class="active">今日</span>
+          <span>教练</span>
+          <span>记录</span>
+          <span>周报</span>
+          <span>我</span>
+        </nav>
+      </div>
+    </div>
+
+    <div class="device" data-screen="coach">
+      <div class="status-bar">
+        <span>09:42</span>
+        <span>• • •</span>
+      </div>
+      <div class="screen">
+        <div class="screen-header">
+          <div class="title">
+            <time datetime="2025-03-21">教练对话</time>
+            <h2>AI 教练 <span class="badge-pill">洞察同步</span></h2>
+          </div>
+          <span class="goal-chip">上下文：睡眠 + 步行</span>
+        </div>
+        <span class="coach-subhead">最新同步 · 15:20</span>
+
+        <div class="chat-thread">
+          <div class="message user">
+            昨天的“台阶 2 组”没做完，今天要补吗？
+          </div>
+          <div class="message ai">
+            可以补成 1 组，并把时间改到 14:45。数据上你 15:00 后常有会议，提前 15 分钟更容易执行。
+          </div>
+          <article class="coach-card">
+            <div class="coach-meta">
+              <span>洞察卡片 · Mid</span>
+              <span>依据：Past 5d</span>
+            </div>
+            <div class="card-body">
+              近 5 天 17:00 后喝咖啡 3 次，次日入睡潜伏期平均 +11 分钟。建议把下午提神改为“无咖啡因茶 + 台阶 1 组”组合。
+            </div>
+            <div class="coach-actions">
+              <button class="btn primary">采纳组合方案</button>
+              <button class="btn ghost">只保留运动</button>
+              <button class="btn link">为什么这样推荐 →</button>
+            </div>
+          </article>
+          <div class="message ai">
+            另外，今晚继续保持 22:15 关灯流程，完成 48 小时“首胜挑战”就能解锁下一阶段。
+          </div>
+        </div>
+
+        <div class="chat-input">
+          <input type="text" placeholder="告诉教练你现在的状态…" aria-label="发送给教练的内容">
+          <button class="btn primary" style="padding: 10px 18px;">发送</button>
+        </div>
+
+        <nav class="bottom-nav">
+          <span>今日</span>
+          <span class="active">教练</span>
+          <span>记录</span>
+          <span>周报</span>
+          <span>我</span>
+        </nav>
+      </div>
+    </div>
+
+    <div class="device" data-screen="log">
+      <div class="status-bar">
+        <span>09:43</span>
+        <span>• • •</span>
+      </div>
+      <div class="screen">
+        <div class="screen-header">
+          <div class="title">
+            <time datetime="2025-03-21">记录 · 自动 + 手动</time>
+            <h2>今日数据捕捉 <span class="badge-pill">同步正常</span></h2>
+          </div>
+          <span class="goal-chip">数据源：HealthKit / 手动输入</span>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-card">
+            <span class="label">步数</span>
+            <strong>6,420</strong>
+            <small>较昨日 +12%</small>
+          </div>
+          <div class="summary-card">
+            <span class="label">睡眠</span>
+            <strong>7h 18m</strong>
+            <small>深睡 24%</small>
+          </div>
+          <div class="summary-card">
+            <span class="label">主观能量</span>
+            <strong>4 / 5</strong>
+            <small>10:30 手动记录</small>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="time">06:55</span>
+            <div class="timeline-card">
+              <strong>自动 · 睡眠结束</strong>
+              <span class="meta">来源：Apple Watch</span>
+              <span>入睡 22:32 · 睡眠潜伏 14 分钟 · 醒来 06:55</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="time">10:30</span>
+            <div class="timeline-card">
+              <strong>手动 · 心情/能量</strong>
+              <span class="meta">标签：平静 · 活力 4/5</span>
+              <span>备注：上午会议顺利，准备下午补台阶练习。</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="time">13:05</span>
+            <div class="timeline-card">
+              <strong>自动 · 午餐记录</strong>
+              <span class="meta">连接：Notion 模板</span>
+              <span>鸡胸+藜麦沙拉，含咖啡因饮品：否。</span>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="time">15:20</span>
+            <div class="timeline-card">
+              <strong>触发 · 久坐 60 分钟</strong>
+              <span class="meta">触发：情境提醒</span>
+              <span>建议执行：台阶 2 组 + 伸展。状态：待完成。</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button class="btn primary">新增手动记录</button>
+          <button class="btn ghost">导出 CSV</button>
+        </div>
+
+        <nav class="bottom-nav">
+          <span>今日</span>
+          <span>教练</span>
+          <span class="active">记录</span>
+          <span>周报</span>
+          <span>我</span>
+        </nav>
+      </div>
+    </div>
+
+    <div class="device" data-screen="weekly">
+      <div class="status-bar">
+        <span>09:44</span>
+        <span>• • •</span>
+      </div>
+      <div class="screen">
+        <div class="screen-header">
+          <div class="title">
+            <time datetime="2025-W14">第 14 周复盘</time>
+            <h2>周报 · 少而稳进度 <span class="badge-pill">AI 解析</span></h2>
+          </div>
+          <span class="goal-chip">周期：3 月 17 日 - 3 月 23 日</span>
+        </div>
+
+        <div class="weekly-hero">
+          <div class="progress-ring"></div>
+          <div class="weekly-details">
+            <strong style="font-size:18px;">完成率 62%</strong>
+            <span>较上周 +8%，卡片反馈“有感”占 76%。</span>
+            <span>首胜挑战完成 3/4 次，待补：晚间拉伸。</span>
+          </div>
+        </div>
+
+        <div class="weekly-insights">
+          <div class="insight-row">
+            <div>
+              <strong>Top 影响因子 · 周末作息漂移</strong>
+              <span>周末平均晚睡 45 分钟，周一入睡潜伏 +18 分钟。</span>
+            </div>
+            <button class="btn link">标记为“有感”</button>
+          </div>
+          <div class="insight-row">
+            <div>
+              <strong>晚间屏幕暴露</strong>
+              <span>22:30 后屏幕 38 分钟，深睡比例下降 6%。建议使用“夜间暖屏”自动化。</span>
+            </div>
+            <button class="btn link">添加自动化</button>
+          </div>
+          <div class="insight-row">
+            <div>
+              <strong>午后低活动</strong>
+              <span>15:00-17:00 步数低于目标 32%，与下午疲劳评分 4/5 相关。</span>
+            </div>
+            <button class="btn link">生成补救计划</button>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="card-header">
+            <h3><span class="domain-token">🗓️</span>下周微计划</h3>
+            <span class="pill-outline">AI 推荐</span>
+          </div>
+          <div class="plan-card">
+            <div class="plan-row">
+              <div>
+                <span>22:20 洗漱 3′ — 睡眠</span>
+                <div class="metadata" style="margin-top:6px;">
+                  <span>自动提醒</span><span>证据：High</span>
+                </div>
+              </div>
+              <button class="btn tertiary" style="padding:10px 16px;">采纳</button>
+            </div>
+            <div class="plan-row">
+              <div>
+                <span>15:00 台阶 2 组 — 步行</span>
+                <div class="metadata" style="margin-top:6px;">
+                  <span>室内可执行</span><span>证据：Mid</span>
+                </div>
+              </div>
+              <button class="btn ghost" style="padding:10px 16px;">调整</button>
+            </div>
+            <div class="plan-row">
+              <div>
+                <span>21:45 设备自动切换夜间模式</span>
+                <div class="metadata" style="margin-top:6px;">
+                  <span>触发：情境规则</span><span>证据：High</span>
+                </div>
+              </div>
+              <button class="btn ghost" style="padding:10px 16px;">预览</button>
+            </div>
+          </div>
+        </article>
+
+        <nav class="bottom-nav">
+          <span>今日</span>
+          <span>教练</span>
+          <span>记录</span>
+          <span class="active">周报</span>
+          <span>我</span>
+        </nav>
+      </div>
+    </div>
+
+    <div class="device" data-screen="profile">
+      <div class="status-bar">
+        <span>09:45</span>
+        <span>• • •</span>
+      </div>
+      <div class="screen">
+        <div class="screen-header">
+          <div class="title">
+            <time datetime="2025-03-21">账号中心</time>
+            <h2>我 · 偏好与隐私 <span class="badge-pill">安全同步</span></h2>
+          </div>
+          <span class="goal-chip">敏感数据仅本地加密</span>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="avatar">LY</div>
+            <div class="profile-info">
+              <span class="name">Lydia Yang</span>
+              <span class="email">lydia.yang@habitflow.app</span>
+              <span class="coach-subhead" style="margin-top:4px;">实验版本：V0.2 · Last sync 09:32</span>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <div class="setting-row">
+              <span>允许教练使用情境触发</span>
+              <div class="toggle active"></div>
+            </div>
+            <div class="setting-row">
+              <span>夜间 22:30 后静音推送</span>
+              <div class="toggle active"></div>
+            </div>
+            <div class="setting-row">
+              <span>参与新功能内测（Prompt Lab）</span>
+              <div class="toggle"></div>
+            </div>
+          </div>
+
+          <div class="profile-links">
+            <a href="#">查看数据授权矩阵 →</a>
+            <a href="#">导出我的数据（JSON / CSV） →</a>
+            <a href="#">查看隐私政策 &amp; 使用条款 →</a>
+          </div>
+        </div>
+
+        <article class="card">
+          <div class="card-header">
+            <h3><span class="domain-token">🛡️</span>数据策略摘要</h3>
+            <span class="pill-outline">隐私中心</span>
+          </div>
+          <div class="card-body">
+            所有可识别行为数据默认保存在设备本地，教练训练使用去标识化指标。可随时发起“一键清除”，同时支持离线模式提供通用建议。
+          </div>
+          <div class="button-row">
+            <button class="btn ghost">管理授权</button>
+            <button class="btn link">了解安全设计 →</button>
+          </div>
+        </article>
+
+        <nav class="bottom-nav">
+          <span>今日</span>
+          <span>教练</span>
+          <span>记录</span>
+          <span>周报</span>
+          <span class="active">我</span>
+        </nav>
+      </div>
+    </div>
+
+    <aside class="side-panel">
+      <section class="panel-section">
+        <h3>周报回顾 <span class="pill-outline">第 14 周</span></h3>
+        <div class="kpi">
+          <div class="value">62%</div>
+          <div class="trend">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 8L6.2 4.8L8.3 6.9L11 4" stroke="#4CBA83" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>+8% 周环比</span>
+          </div>
+        </div>
+        <div class="list">
+          <div class="list-item">
+            <div class="dot"></div>
+            <div>
+              <strong>周末作息漂移</strong>
+              <span>周末晚睡 45 分钟，导致周一入睡潜伏延长 18 分钟。</span>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="dot"></div>
+            <div>
+              <strong>晚间屏幕暴露</strong>
+              <span>22:30 后平均屏幕 38 分钟 → 深睡比例下降 6%。</span>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="dot"></div>
+            <div>
+              <strong>午后低活动</strong>
+              <span>15:00-17:00 步数偏低，与下午主观疲劳评分 4/5 高度相关。</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-section">
+        <h3>下周微计划 <span class="pill-outline">AI 推荐</span></h3>
+        <div class="plan-card">
+          <div class="plan-row">
+            <div>
+              <span>22:20 洗漱 3′ — 睡眠</span>
+              <div class="metadata" style="margin-top:6px;">
+                <span>自动提醒</span><span>证据：High</span>
+              </div>
+            </div>
+            <button class="btn tertiary" style="padding:10px 16px;">采纳</button>
+          </div>
+          <div class="plan-row">
+            <div>
+              <span>15:00 台阶 2 组 — 步行</span>
+              <div class="metadata" style="margin-top:6px;">
+                <span>室内可执行</span><span>证据：Mid</span>
+              </div>
+            </div>
+            <button class="btn ghost" style="padding:10px 16px;">调整</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel-section">
+        <h3>数据授权矩阵 <span class="pill-outline">隐私中心</span></h3>
+        <div class="plan-card">
+          <div class="plan-row">
+            <div>
+              <span>健康数据：步数 / 睡眠 / 心率</span>
+              <small>状态：已授权</small>
+            </div>
+            <button class="btn tertiary" style="padding:10px 16px;">管理</button>
+          </div>
+          <div class="plan-row">
+            <div>
+              <span>屏幕使用时长（iOS 屏幕使用时间）</span>
+              <small>状态：待授权</small>
+            </div>
+            <button class="btn ghost" style="padding:10px 16px;">去授权</button>
+          </div>
+          <div class="plan-row">
+            <div>
+              <span>情绪日志（手动记录）</span>
+              <small>状态：自动同步</small>
+            </div>
+            <button class="btn ghost" style="padding:10px 16px;">查看</button>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </section>
+
+  <footer class="note">
+    * 视觉体系沿用 `design_tokens.json` 中的深色皮肤、品牌蓝、16px 卡片圆角与阶梯阴影；交互流程参考 `HabitFlow_wireframes.md` 与 `mid_fidelity_wireframes.md`，覆盖今日页、AI 教练、记录、周报和“我”五个关键模块，便于后续在 SwiftUI / Compose / Web 端快速对齐实现。
+  </footer>
+</body>
+</html>

@@ -1,0 +1,18 @@
+type,key,content
+prompt,coach_prompt,"角色：你是温和、具体、可解释的健康生活教练。
+输出结构：
+1) 解释卡片：一句话因果 + 简短依据 + 证据等级（高/中/低）。
+2) 当日微目标：2–5 分钟，可执行，可度量；给失败时的替代路线。
+3) 风险提醒：仅在必要时提示非医疗边界或安全注意。
+约束：不评判，不制造焦虑；避免专业术语堆砌；以用户数据为主进行个性化；若数据不足，先询问补充。"
+template,causal_card.title,{cause} → {effect}
+template,causal_card.body,最近 {window_days} 天内，{evidence_brief}。证据等级：{evidence_level}（样本天数={n_days}，r≈{corr}）。
+template,tiny_goal,"{""domain"": ""{sleep|walk|screen|focus|stress}"", ""intent_if"": ""{context}"", ""intent_then"": ""{action}"", ""duration_min"": ""{2..5}"", ""fallback"": ""{替代方案A / 降级版本}""}"
+phrase,affirmation_1,已经比上周更接近目标了 👍
+phrase,affirmation_2,你做对的一点是：愿意在累的时候也完成一个很小的动作。
+phrase,affirmation_3,失败不代表退步，它告诉我们哪个情境需要更简化的做法。
+disclaimer,risk_1,此建议仅用于生活方式参考，非医疗诊断或治疗。
+disclaimer,risk_2,如有胸闷、心悸、眩晕等不适，请立刻停止并咨询专业人士。
+rule,bedtime_screen_block,"{""name"": ""bedtime_screen_block"", ""when"": ""22:10-22:40 & device_active & location=home"", ""then"": ""push_card:tiny_sleep_goal_3min"", ""limit"": ""once_per_day""}"
+rule,afternoon_sedentary_break,"{""name"": ""afternoon_sedentary_break"", ""when"": ""14:30-16:30 & sedentary>=60m"", ""then"": ""push_card:walk_stairs_2sets"", ""limit"": ""every_90m""}"
+rule,evidence_thresholds,"{""corr_high"": 0.5, ""corr_mid"": 0.3, ""min_days"": 7, ""recent_anomaly_days"": 3}"

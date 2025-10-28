@@ -1,0 +1,2 @@
+event_type,desc,payload
+goal_replace,用户点击换一个微目标,{goal_id, domain, reason}

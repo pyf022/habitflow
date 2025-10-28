@@ -1,0 +1,84 @@
+{
+  "version": "0.1",
+  "language": "zh-CN",
+  "templates": {
+    "coach_prompt": "角色：你是温和、具体、可解释的健康生活教练。\n输出结构：\n1) 解释卡片：一句话因果 + 简短依据 + 证据等级（高/中/低）。\n2) 当日微目标：2–5 分钟，可执行，可度量；给失败时的替代路线。\n3) 风险提醒：仅在必要时提示非医疗边界或安全注意。\n约束：不评判，不制造焦虑；避免专业术语堆砌；以用户数据为主进行个性化；若数据不足，先询问补充。",
+    "causal_card_template": {
+      "title": "{cause} → {effect}",
+      "body": "最近 {window_days} 天内，{evidence_brief}。证据等级：{evidence_level}（样本天数={n_days}，r≈{corr}）。",
+      "actions": [
+        "了解原因",
+        "采纳建议",
+        "加入下周计划"
+      ]
+    },
+    "tiny_goal_template": {
+      "domain": "{sleep|walk|screen|focus|stress}",
+      "intent_if": "{context}",
+      "intent_then": "{action}",
+      "duration_min": "{2..5}",
+      "fallback": "{替代方案A / 降级版本}"
+    },
+    "affirmations": [
+      "已经比上周更接近目标了 👍",
+      "你做对的一点是：愿意在累的时候也完成一个很小的动作。",
+      "失败不代表退步，它告诉我们哪个情境需要更简化的做法。"
+    ],
+    "risk_disclaimers": [
+      "此建议仅用于生活方式参考，非医疗诊断或治疗。",
+      "如有胸闷、心悸、眩晕等不适，请立刻停止并咨询专业人士。"
+    ]
+  },
+  "rules": {
+    "trigger_rules": [
+      {
+        "name": "bedtime_screen_block",
+        "when": "22:10-22:40 & device_active & location=home",
+        "then": "push_card:tiny_sleep_goal_3min",
+        "limit": "once_per_day"
+      },
+      {
+        "name": "afternoon_sedentary_break",
+        "when": "14:30-16:30 & sedentary>=60m",
+        "then": "push_card:walk_stairs_2sets",
+        "limit": "every_90m"
+      }
+    ],
+    "evidence_thresholds": {
+      "corr_high": 0.5,
+      "corr_mid": 0.3,
+      "min_days": 7,
+      "recent_anomaly_days": 3
+    }
+  },
+  "schemas": {
+    "DailyFeatures": {
+      "date": "yyyy-mm-dd",
+      "steps": "int",
+      "active_minutes": "int",
+      "sleep_latency": "minutes",
+      "sleep_duration": "minutes",
+      "screen_after_2230": "minutes",
+      "caffeine_flag": "bool",
+      "hi_intensity_flag": "bool",
+      "hrv": "ms?",
+      "mood": "1..5?"
+    },
+    "CausalCard": {
+      "card_id": "string",
+      "date_range": "yyyy-mm-dd..yyyy-mm-dd",
+      "cause": "string",
+      "effect": "string",
+      "evidence_level": "high|mid|low",
+      "rationale_hash": "sha1"
+    },
+    "TinyGoal": {
+      "goal_id": "string",
+      "domain": "sleep|walk|screen|focus|stress",
+      "intent_if": "string",
+      "intent_then": "string",
+      "duration_min": "int",
+      "status": "planned|done|skipped"
+    }
+  }
+}

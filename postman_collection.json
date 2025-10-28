@@ -1,0 +1,101 @@
+{
+  "info": {
+    "name": "HabitFlow V1 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://api.habitflow.example.com/v1/auth/login",
+          "protocol": "https",
+          "host": [
+            "api",
+            "habitflow",
+            "example",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"identifier\": \"user@example.com\", \"code\": \"123456\"}"
+        }
+      }
+    },
+    {
+      "name": "Coach Chat",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://api.habitflow.example.com/v1/coach/chat",
+          "protocol": "https",
+          "host": [
+            "api",
+            "habitflow",
+            "example",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "coach",
+            "chat"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"message\": \"\\u4e0b\\u5348\\u72af\\u56f0\\u600e\\u4e48\\u529e\\uff1f\"}"
+        }
+      }
+    },
+    {
+      "name": "Weekly Report",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "https://api.habitflow.example.com/v1/insights/weekly",
+          "protocol": "https",
+          "host": [
+            "api",
+            "habitflow",
+            "example",
+            "com"
+          ],
+          "path": [
+            "v1",
+            "insights",
+            "weekly"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: HabitFlow API
+  version: 1.0.0
+  description: V1 MVP backend
+servers:
+- url: https://api.habitflow.example.com
+paths:
+  /v1/auth/login:
+    post:
+      summary: Login via email/phone code
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                code:
+                  type: string
+              required:
+              - identifier
+              - code
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user_id:
+                    type: string
+  /v1/users/me:
+    get:
+      summary: Get my profile
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                  region:
+                    type: string
+                  consents:
+                    type: object
+                  preferences:
+                    type: object
+  /v1/consents:
+    post:
+      summary: Update consent matrix
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '204':
+          description: Updated
+  /v1/events:
+    post:
+      summary: Ingest analytics events
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                events:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        '202':
+          description: Accepted
+  /v1/coach/chat:
+    post:
+      summary: Coach chat (RAG + policy)
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                context:
+                  type: object
+              required:
+              - message
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reply:
+                    type: string
+                  cards:
+                    type: array
+                    items:
+                      type: object
+  /v1/insights/weekly:
+    get:
+      summary: Weekly report aggregate
+      security:
+      - BearerAuth: []
+      parameters:
+      - in: query
+        name: week
+        schema:
+          type: string
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  completion_rate:
+                    type: number
+                  top_factors:
+                    type: array
+                    items:
+                      type: string
+                  next_goals:
+                    type: array
+                    items:
+                      type: object
+  /v1/prompts:
+    get:
+      summary: Prompt packs
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+  /v1/rules:
+    get:
+      summary: Rules/thresholds
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

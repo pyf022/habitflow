@@ -1,0 +1,10 @@
+event_type,desc,payload
+app_open,打开 App,"{source, version}"
+goal_accept,用户采纳微目标,"{goal_id, domain}"
+goal_done,完成微目标,"{goal_id, duration, success:bool}"
+card_view,查看解释卡片,{card_id}
+card_dismiss,关闭解释卡片,"{card_id, reason}"
+coach_msg_send,用户发送消息,"{len, has_data_refs}"
+coach_msg_receive,AI 回复消息,"{template_used, tokens}"
+weekly_report_view,查看周报,{week_no}
+push_click,点击推送,{rule_name}

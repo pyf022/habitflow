@@ -1,0 +1,405 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1A0C5E8B2C2D41C000B7CE42 /* HabitFlowUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E7D2C2D41C000B7CE42 /* HabitFlowUIApp.swift */; };
+		1A0C5E8C2C2D41C000B7CE42 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E7E2C2D41C000B7CE42 /* MainTabView.swift */; };
+		1A0C5E8D2C2D41C000B7CE42 /* HabitFlowTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E7F2C2D41C000B7CE42 /* HabitFlowTheme.swift */; };
+		1A0C5E8E2C2D41C000B7CE42 /* HabitComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E802C2D41C000B7CE42 /* HabitComponents.swift */; };
+		1A0C5E8F2C2D41C000B7CE42 /* HabitModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E812C2D41C000B7CE42 /* HabitModels.swift */; };
+		1A0C5E902C2D41C000B7CE42 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E822C2D41C000B7CE42 /* TodayView.swift */; };
+		1A0C5E912C2D41C000B7CE42 /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E832C2D41C000B7CE42 /* CoachView.swift */; };
+		1A0C5E922C2D41C000B7CE42 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E842C2D41C000B7CE42 /* LogView.swift */; };
+		1A0C5E932C2D41C000B7CE42 /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E852C2D41C000B7CE42 /* WeeklyView.swift */; };
+		1A0C5E942C2D41C000B7CE42 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0C5E862C2D41C000B7CE42 /* ProfileView.swift */; };
+		1A0C5E9E2C2D41E400B7CE42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A0C5E9D2C2D41E400B7CE42 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1A0C5E7C2C2D41C000B7CE42 /* HabitFlowUIApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitFlowUIApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A0C5E7D2C2D41C000B7CE42 /* HabitFlowUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitFlowUIApp.swift; sourceTree = "<group>"; };
+		1A0C5E7E2C2D41C000B7CE42 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		1A0C5E7F2C2D41C000B7CE42 /* HabitFlowTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitFlowTheme.swift; sourceTree = "<group>"; };
+		1A0C5E802C2D41C000B7CE42 /* HabitComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitComponents.swift; sourceTree = "<group>"; };
+		1A0C5E812C2D41C000B7CE42 /* HabitModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitModels.swift; sourceTree = "<group>"; };
+		1A0C5E822C2D41C000B7CE42 /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		1A0C5E832C2D41C000B7CE42 /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
+		1A0C5E842C2D41C000B7CE42 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
+		1A0C5E852C2D41C000B7CE42 /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
+		1A0C5E862C2D41C000B7CE42 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		1A0C5E9D2C2D41E400B7CE42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1A0C5E792C2D41C000B7CE42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1A0C5E732C2D41C000B7CE42 = {
+			isa = PBXGroup;
+			children = (
+				1A0C5E7A2C2D41C000B7CE42 /* Products */,
+				1A0C5E972C2D41D900B7CE42 /* HabitFlowUIApp */,
+			);
+			sourceTree = "<group>";
+		};
+		1A0C5E7A2C2D41C000B7CE42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5E7C2C2D41C000B7CE42 /* HabitFlowUIApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1A0C5E972C2D41D900B7CE42 /* HabitFlowUIApp */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5E982C2D41D900B7CE42 /* Source */,
+				1A0C5E9A2C2D41D900B7CE42 /* Resources */,
+			);
+			path = HabitFlowUIApp;
+			sourceTree = "<group>";
+		};
+		1A0C5E982C2D41D900B7CE42 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5EA02C2D41E400B7CE42 /* Theme */,
+				1A0C5E9F2C2D41E400B7CE42 /* Components */,
+				1A0C5EA12C2D41E400B7CE42 /* Models */,
+				1A0C5E7D2C2D41C000B7CE42 /* HabitFlowUIApp.swift */,
+				1A0C5E7E2C2D41C000B7CE42 /* MainTabView.swift */,
+				1A0C5E822C2D41C000B7CE42 /* TodayView.swift */,
+				1A0C5E832C2D41C000B7CE42 /* CoachView.swift */,
+				1A0C5E842C2D41C000B7CE42 /* LogView.swift */,
+				1A0C5E852C2D41C000B7CE42 /* WeeklyView.swift */,
+				1A0C5E862C2D41C000B7CE42 /* ProfileView.swift */,
+			);
+			path = HabitFlowUIApp;
+			sourceTree = "<group>";
+		};
+		1A0C5E9A2C2D41D900B7CE42 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5E9B2C2D41D900B7CE42 /* Resources */,
+				1A0C5E9C2C2D41E400B7CE42 /* Preview Content */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		1A0C5E9B2C2D41D900B7CE42 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5E9D2C2D41E400B7CE42 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1A0C5E9C2C2D41E400B7CE42 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5EA22C2D41E400B7CE42 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1A0C5E9F2C2D41E400B7CE42 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5E802C2D41C000B7CE42 /* HabitComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		1A0C5EA02C2D41E400B7CE42 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5E7F2C2D41C000B7CE42 /* HabitFlowTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		1A0C5EA12C2D41E400B7CE42 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1A0C5E812C2D41C000B7CE42 /* HabitModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1A0C5EA22C2D41E400B7CE42 /* Preview Assets.xcassets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Preview Assets.xcassets";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1A0C5E7B2C2D41C000B7CE42 /* HabitFlowUIApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A0C5E962C2D41C000B7CE42 /* Build configuration list for PBXNativeTarget "HabitFlowUIApp" */;
+			buildPhases = (
+				1A0C5E782C2D41C000B7CE42 /* Sources */,
+				1A0C5E792C2D41C000B7CE42 /* Frameworks */,
+				1A0C5E7A2C2D41C000B7CE41 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HabitFlowUIApp;
+			productName = HabitFlowUIApp;
+			productReference = 1A0C5E7C2C2D41C000B7CE42 /* HabitFlowUIApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1A0C5E742C2D41C000B7CE42 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					1A0C5E7B2C2D41C000B7CE42 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 1A0C5E752C2D41C000B7CE42 /* Build configuration list for PBXProject "HabitFlowUIApp" */;
+			compatibilityVersion = "Xcode 16.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1A0C5E732C2D41C000B7CE42;
+			productRefGroup = 1A0C5E7A2C2D41C000B7CE42 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1A0C5E7B2C2D41C000B7CE42 /* HabitFlowUIApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1A0C5E7A2C2D41C000B7CE41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A0C5E9E2C2D41E400B7CE42 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1A0C5E782C2D41C000B7CE42 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A0C5E902C2D41C000B7CE42 /* TodayView.swift in Sources */,
+				1A0C5E932C2D41C000B7CE42 /* WeeklyView.swift in Sources */,
+				1A0C5E942C2D41C000B7CE42 /* ProfileView.swift in Sources */,
+				1A0C5E912C2D41C000B7CE42 /* CoachView.swift in Sources */,
+				1A0C5E8C2C2D41C000B7CE42 /* MainTabView.swift in Sources */,
+				1A0C5E922C2D41C000B7CE42 /* LogView.swift in Sources */,
+				1A0C5E8F2C2D41C000B7CE42 /* HabitModels.swift in Sources */,
+				1A0C5E8E2C2D41C000B7CE42 /* HabitComponents.swift in Sources */,
+				1A0C5E8D2C2D41C000B7CE42 /* HabitFlowTheme.swift in Sources */,
+				1A0C5E8B2C2D41C000B7CE42 /* HabitFlowUIApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1A0C5E762C2D41C000B7CE42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1A0C5E772C2D41C000B7CE42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1A0C5E992C2D41D900B7CE42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				INFOPLIST_FILE = HabitFlowUIApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.habitflow.prototype;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1A0C5E9A2C2D41D900B7CE42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				INFOPLIST_FILE = HabitFlowUIApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = app.habitflow.prototype;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1A0C5E752C2D41C000B7CE42 /* Build configuration list for PBXProject "HabitFlowUIApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A0C5E762C2D41C000B7CE42 /* Debug */,
+				1A0C5E772C2D41C000B7CE42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1A0C5E962C2D41C000B7CE42 /* Build configuration list for PBXNativeTarget "HabitFlowUIApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A0C5E992C2D41D900B7CE42 /* Debug */,
+				1A0C5E9A2C2D41D900B7CE42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 1A0C5E742C2D41C000B7CE42 /* Project object */;
+}

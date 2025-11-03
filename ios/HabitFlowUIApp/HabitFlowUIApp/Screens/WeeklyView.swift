@@ -1,21 +1,24 @@
 import SwiftUI
 
 struct WeeklyView: View {
-    private let insights = HabitMockData.weeklyInsights
-    private let plan = HabitMockData.weeklyPlan
+    @StateObject private var viewModel = WeeklyViewModel()
 
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
-                HabitStatusBar(time: "09:44")
+                HabitStatusBar(time: viewModel.context.statusBarTime)
 
                 HabitScreenHeader(
-                    timestamp: "第 14 周回顾",
-                    title: "周报 · 进度洞察",
-                    subtitle: "范围：3 月 17 日 - 3 月 23 日",
-                    badge: .init(text: "AI 推荐", style: .primary),
-                    goalChip: "周期目标：节律稳定"
+                    timestamp: viewModel.context.timestamp,
+                    title: viewModel.context.title,
+                    subtitle: viewModel.context.subtitle,
+                    badge: viewModel.context.badge,
+                    goalChip: viewModel.context.goalChip
                 )
+
+                if let errorMessage = viewModel.errorMessage {
+                    InlineErrorBanner(message: errorMessage)
+                }
 
                 weeklyHero
                 insightList
@@ -25,15 +28,16 @@ struct WeeklyView: View {
             .padding(.vertical, 22)
         }
         .habitScreenBackground()
+        .task { await viewModel.load() }
     }
 
     private var weeklyHero: some View {
         HStack(spacing: 18) {
-            WeeklyProgressRing(progress: 0.62)
+            WeeklyProgressRing(progress: viewModel.summary.progress)
                 .frame(width: 120, height: 120)
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("综合完成度 62%")
+                Text("综合完成率 \(Int(viewModel.summary.progress * 100))%")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundColor(HabitFlowTheme.ColorPalette.textPrimary)
 
@@ -41,18 +45,17 @@ struct WeeklyView: View {
                     Image(systemName: "arrow.up.right")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(HabitFlowTheme.ColorPalette.success)
-                    Text("+8% 周环比")
+                    Text("\(viewModel.summary.trendValue) \(viewModel.summary.trendLabel)")
                         .font(.system(size: 13, weight: .semibold))
                         .foregroundColor(HabitFlowTheme.ColorPalette.success)
                 }
 
-                Text("AI 推荐执行率 76%，夜间亮屏平均 26 分钟，心率恢复良好。")
-                    .font(.system(size: 13, weight: .regular))
-                    .foregroundColor(HabitFlowTheme.ColorPalette.textSubdued)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text("睡眠挑战完成 3/4 次，建议继续保持周末作息勿漂移。")
-                    .font(.system(size: 13, weight: .regular))
-                    .foregroundColor(HabitFlowTheme.ColorPalette.textSubdued)
+                ForEach(viewModel.summary.summaryLines, id: \.self) { line in
+                    Text(line)
+                        .font(.system(size: 13, weight: .regular))
+                        .foregroundColor(HabitFlowTheme.ColorPalette.textSubdued)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
         .padding(18)
@@ -66,7 +69,7 @@ struct WeeklyView: View {
                 .foregroundColor(HabitFlowTheme.ColorPalette.textPrimary)
 
             VStack(spacing: 16) {
-                ForEach(insights) { insight in
+                ForEach(viewModel.insights) { insight in
                     HStack(alignment: .top, spacing: 16) {
                         Circle()
                             .fill(HabitFlowTheme.ColorPalette.primary.opacity(0.2))
@@ -103,14 +106,14 @@ struct WeeklyView: View {
             }
 
             VStack(spacing: 14) {
-                ForEach(plan) { item in
+                ForEach(viewModel.plan) { item in
                     PlanRowView(
                         title: item.title,
                         metadata: item.metadata,
                         buttonTitle: item.buttonTitle,
                         buttonKind: item.buttonKind
                     )
-                    if item.id != plan.last?.id {
+                    if item.id != viewModel.plan.last?.id {
                         Divider()
                             .background(HabitFlowTheme.ColorPalette.divider.opacity(0.4))
                     }

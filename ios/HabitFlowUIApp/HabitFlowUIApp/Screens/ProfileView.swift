@@ -1,22 +1,24 @@
 import SwiftUI
 
 struct ProfileView: View {
-    private let settings = HabitMockData.settingPreferences
-    private let links = HabitMockData.profileLinks
-    private let authorizations = HabitMockData.dataAuthorizations
+    @StateObject private var viewModel = ProfileViewModel()
 
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 18) {
-                HabitStatusBar(time: "09:45")
+                HabitStatusBar(time: viewModel.context.statusBarTime)
 
                 HabitScreenHeader(
-                    timestamp: "账号中心",
-                    title: "我 · 偏好与隐私",
-                    subtitle: "实验版本：V0.2",
-                    badge: .init(text: "安全同步", style: .primary),
-                    goalChip: "敏感数据仅本地加密"
+                    timestamp: viewModel.context.timestamp,
+                    title: viewModel.context.title,
+                    subtitle: viewModel.context.subtitle,
+                    badge: viewModel.context.badge,
+                    goalChip: viewModel.context.goalChip
                 )
+
+                if let errorMessage = viewModel.errorMessage {
+                    InlineErrorBanner(message: errorMessage)
+                }
 
                 profileCard
                 dataStrategyCard
@@ -26,6 +28,7 @@ struct ProfileView: View {
             .padding(.vertical, 22)
         }
         .habitScreenBackground()
+        .task { await viewModel.load() }
     }
 
     private var profileCard: some View {
@@ -35,28 +38,28 @@ struct ProfileView: View {
                     .fill(HabitFlowTheme.ColorPalette.primary.opacity(0.18))
                     .frame(width: 60, height: 60)
                     .overlay(
-                        Text("LY")
+                        Text(viewModel.identity.initials)
                             .font(.system(size: 24, weight: .bold))
                             .foregroundColor(HabitFlowTheme.ColorPalette.primary)
                     )
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Lydia Yang")
+                    Text(viewModel.identity.displayName)
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundColor(HabitFlowTheme.ColorPalette.textPrimary)
-                    Text("lydia.yang@habitflow.app")
+                    Text(viewModel.identity.email)
                         .font(.system(size: 13, weight: .regular))
                         .foregroundColor(HabitFlowTheme.ColorPalette.textSubdued)
-                    Text("最近同步 09:32 · Prompt Lab 内测")
+                    Text("\(viewModel.identity.lastSyncLabel) · \(viewModel.identity.experimentTag)")
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(HabitFlowTheme.ColorPalette.primary)
                 }
             }
 
             VStack(spacing: 12) {
-                ForEach(settings) { setting in
+                ForEach(viewModel.settings) { setting in
                     SettingToggleRow(title: setting.title, isOn: setting.isOn)
-                    if setting.id != settings.last?.id {
+                    if setting.id != viewModel.settings.last?.id {
                         Divider()
                             .background(HabitFlowTheme.ColorPalette.divider.opacity(0.4))
                     }
@@ -64,7 +67,7 @@ struct ProfileView: View {
             }
 
             VStack(alignment: .leading, spacing: 12) {
-                ForEach(links) { link in
+                ForEach(viewModel.links) { link in
                     HStack {
                         Image(systemName: link.icon)
                             .font(.system(size: 15, weight: .medium))
@@ -77,7 +80,7 @@ struct ProfileView: View {
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundColor(HabitFlowTheme.ColorPalette.primary.opacity(0.7))
                     }
-                    if link.id != links.last?.id {
+                    if link.id != viewModel.links.last?.id {
                         Divider()
                             .background(HabitFlowTheme.ColorPalette.divider.opacity(0.4))
                     }
@@ -98,16 +101,16 @@ struct ProfileView: View {
                 HabitBadge(text: "隐私中心", style: .outline)
             }
 
-            Text("行为数据默认保存在本地，同步、训练前会自动去标识化。可随时发起“清除训练数据”，离线模式也能提供通用建议。")
+            Text(viewModel.dataStrategy.summary)
                 .font(.system(size: 14, weight: .regular))
                 .foregroundColor(HabitFlowTheme.ColorPalette.textSubdued)
                 .fixedSize(horizontal: false, vertical: true)
 
             HStack(spacing: 12) {
-                Button("管理授权", action: {})
-                    .buttonStyle(HabitCapsuleButtonStyle(kind: .ghost))
-                Button("了解安全设计", action: {})
-                    .buttonStyle(HabitCapsuleButtonStyle(kind: .link))
+                ForEach(viewModel.dataStrategy.actions) { action in
+                    Button(action.title, action: {})
+                        .buttonStyle(HabitCapsuleButtonStyle(kind: action.kind))
+                }
             }
         }
         .padding(18)
@@ -125,16 +128,14 @@ struct ProfileView: View {
             }
 
             VStack(spacing: 14) {
-                ForEach(authorizations) { item in
+                ForEach(viewModel.dataAuthorizations) { item in
                     PlanRowView(
                         title: item.scope,
-                        metadata: [
-                            .init(label: item.status, value: "")
-                        ],
+                        metadata: [.init(label: item.status, value: "")],
                         buttonTitle: item.actionTitle,
                         buttonKind: item.kind
                     )
-                    if item.id != authorizations.last?.id {
+                    if item.id != viewModel.dataAuthorizations.last?.id {
                         Divider()
                             .background(HabitFlowTheme.ColorPalette.divider.opacity(0.4))
                     }

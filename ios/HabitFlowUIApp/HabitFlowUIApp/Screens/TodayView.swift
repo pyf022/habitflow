@@ -1,23 +1,24 @@
 import SwiftUI
 
 struct TodayView: View {
-    private let plan = HabitMockData.microHabitPlan
-    private let insight = HabitMockData.nightInsight
-    private let quickActions = HabitMockData.quickActions
-    private let chatMessages = HabitMockData.chatMessages
+    @StateObject private var viewModel = TodayViewModel()
 
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 18) {
-                HabitStatusBar(time: "09:41")
+                HabitStatusBar(time: viewModel.context.statusBarTime)
 
                 HabitScreenHeader(
-                    timestamp: "2025 年 3 月 21 日",
-                    title: "今日 · 成功率 78%",
-                    subtitle: nil,
-                    badge: .init(text: "微目标强化 1", style: .primary),
-                    goalChip: "目标：睡眠修复"
+                    timestamp: viewModel.context.timestamp,
+                    title: viewModel.context.title,
+                    subtitle: viewModel.context.subtitle,
+                    badge: viewModel.context.badge,
+                    goalChip: viewModel.context.goalChip
                 )
+
+                if let errorMessage = viewModel.errorMessage {
+                    InlineErrorBanner(message: errorMessage)
+                }
 
                 microHabitCard
                 insightCard
@@ -28,27 +29,28 @@ struct TodayView: View {
             .padding(.vertical, 22)
         }
         .habitScreenBackground()
+        .task { await viewModel.load() }
     }
 
     private var microHabitCard: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Text(plan.title)
+                Text(viewModel.plan.title)
                     .font(.system(size: 17, weight: .semibold))
                 Spacer()
-                HabitBadge(text: "推荐中", style: .primary)
+                HabitBadge(text: "推荐", style: .primary)
             }
             .foregroundColor(HabitFlowTheme.ColorPalette.textPrimary)
 
-            Text(plan.summary)
+            Text(viewModel.plan.summary)
                 .font(.system(size: 14, weight: .regular))
                 .foregroundColor(HabitFlowTheme.ColorPalette.textSubdued)
                 .fixedSize(horizontal: false, vertical: true)
 
-            HabitMetadataRow(items: plan.metadata)
+            HabitMetadataRow(items: viewModel.plan.metadata)
 
             HStack(spacing: 12) {
-                ForEach(plan.actions) { action in
+                ForEach(viewModel.plan.actions) { action in
                     Button(action.title, action: {})
                         .buttonStyle(HabitCapsuleButtonStyle(kind: action.kind))
                 }
@@ -61,20 +63,20 @@ struct TodayView: View {
     private var insightCard: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Text(insight.title)
+                Text(viewModel.insight.title)
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(HabitFlowTheme.ColorPalette.textPrimary)
                 Spacer()
-                HabitBadge(text: insight.evidenceLevel, style: .warning)
+                HabitBadge(text: viewModel.insight.evidenceLevel, style: .warning)
             }
 
-            Text(insight.body)
+            Text(viewModel.insight.body)
                 .font(.system(size: 14, weight: .regular))
                 .foregroundColor(HabitFlowTheme.ColorPalette.textSubdued)
                 .fixedSize(horizontal: false, vertical: true)
 
             HStack(spacing: 12) {
-                ForEach(insight.actions) { action in
+                ForEach(viewModel.insight.actions) { action in
                     Button(action.title, action: {})
                         .buttonStyle(HabitCapsuleButtonStyle(kind: action.kind))
                 }
@@ -95,7 +97,7 @@ struct TodayView: View {
             }
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                ForEach(quickActions) { action in
+                ForEach(viewModel.quickActions) { action in
                     QuickActionTile(
                         title: action.title,
                         subtitle: action.domain,
@@ -110,7 +112,7 @@ struct TodayView: View {
 
     private var chatCard: some View {
         VStack(alignment: .leading, spacing: 16) {
-            ForEach(chatMessages) { message in
+            ForEach(viewModel.chatThread) { message in
                 CoachBubble(
                     role: message.role == .ai ? .ai : .user,
                     text: message.text
@@ -120,12 +122,12 @@ struct TodayView: View {
             HStack(spacing: 12) {
                 Button("一键采纳建议", action: {})
                     .buttonStyle(HabitCapsuleButtonStyle(kind: .primary))
-                Button("改成 2 组", action: {})
+                Button("改成 2 轮", action: {})
                     .buttonStyle(HabitCapsuleButtonStyle(kind: .ghost))
             }
 
             VStack(spacing: 12) {
-                TextField("说说你此刻的状态…", text: .constant(""))
+                TextField("说说你此刻的状态", text: .constant(""))
                     .textFieldStyle(.roundedBorder)
                     .disabled(true)
 

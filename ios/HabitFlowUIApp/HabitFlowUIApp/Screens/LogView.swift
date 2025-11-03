@@ -1,21 +1,24 @@
 import SwiftUI
 
 struct LogView: View {
-    private let metrics = HabitMockData.logMetrics
-    private let timeline = HabitMockData.timeline
+    @StateObject private var viewModel = LogViewModel()
 
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 18) {
-                HabitStatusBar(time: "09:43")
+                HabitStatusBar(time: viewModel.context.statusBarTime)
 
                 HabitScreenHeader(
-                    timestamp: "记录 · 自动 + 手动",
-                    title: "数据捕捉",
-                    subtitle: nil,
-                    badge: .init(text: "同步完成", style: .primary),
-                    goalChip: "来源：HealthKit / 手动"
+                    timestamp: viewModel.context.timestamp,
+                    title: viewModel.context.title,
+                    subtitle: viewModel.context.subtitle,
+                    badge: viewModel.context.badge,
+                    goalChip: viewModel.context.goalChip
                 )
+
+                if let errorMessage = viewModel.errorMessage {
+                    InlineErrorBanner(message: errorMessage)
+                }
 
                 metricGrid
                 timelineSection
@@ -25,6 +28,7 @@ struct LogView: View {
             .padding(.vertical, 22)
         }
         .habitScreenBackground()
+        .task { await viewModel.load() }
     }
 
     private var metricGrid: some View {
@@ -34,7 +38,7 @@ struct LogView: View {
                 .foregroundColor(HabitFlowTheme.ColorPalette.textPrimary)
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                ForEach(metrics) { metric in
+                ForEach(viewModel.metrics) { metric in
                     MetricTile(label: metric.label, value: metric.value, detail: metric.detail)
                 }
             }
@@ -48,11 +52,11 @@ struct LogView: View {
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(HabitFlowTheme.ColorPalette.textPrimary)
                 Spacer()
-                HabitBadge(text: "按时序", style: .outline)
+                HabitBadge(text: "按时段", style: .outline)
             }
 
             VStack(spacing: 16) {
-                ForEach(timeline) { event in
+                ForEach(viewModel.timeline) { event in
                     TimelineEntryView(
                         time: event.time,
                         title: event.title,
@@ -69,19 +73,20 @@ struct LogView: View {
     private var manualCaptureCard: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Text("快速记录")
+                Text(viewModel.manualCapture.headline)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(HabitFlowTheme.ColorPalette.textPrimary)
                 Spacer()
-                HabitBadge(text: "支持语音", style: .primary)
+                HabitBadge(text: viewModel.manualCapture.badgeText, style: viewModel.manualCapture.badgeStyle)
             }
 
-            Text("与 Apple Watch 同步成功，情绪打卡、事件标签支持语音 / 打字两种方式。")
+            Text(viewModel.manualCapture.body)
                 .font(.system(size: 14, weight: .regular))
                 .foregroundColor(HabitFlowTheme.ColorPalette.textSubdued)
+                .fixedSize(horizontal: false, vertical: true)
 
-            Button("新增记录", action: {})
-                .buttonStyle(HabitCapsuleButtonStyle(kind: .primary))
+            Button(viewModel.manualCapture.buttonTitle, action: {})
+                .buttonStyle(HabitCapsuleButtonStyle(kind: viewModel.manualCapture.buttonKind))
         }
         .padding(18)
         .habitCardBackground()

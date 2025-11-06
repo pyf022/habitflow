@@ -1,0 +1,19 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# 忽略 Maven 构建输出目录
+/target/
+
+# 如果是多模块项目，也可以加上：
+**/target/
+
+# 也可以顺带忽略IDE缓存
+/.idea/
+/*.iml
+/.vscode/

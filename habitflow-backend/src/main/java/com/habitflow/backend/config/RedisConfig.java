@@ -2,6 +2,7 @@ package com.habitflow.backend.config;
 
 import java.time.Duration;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -17,6 +18,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
+@ConditionalOnProperty(prefix = "spring.cache", name = "type", havingValue = "redis")
 public class RedisConfig implements CachingConfigurer {
 
     private static final Duration DEFAULT_CACHE_TTL = Duration.ofMinutes(10);
